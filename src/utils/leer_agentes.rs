@@ -1,9 +1,22 @@
 use calamine::{Reader, Xlsx, open_workbook};
 use calamine::DataType;
 use crate::model::Agente;
+use std::path::Path;
 
 pub fn leer_agentes_excel(ruta_archivo: &str) -> Result<Vec<Agente>, Box<dyn std::error::Error>> {
-    let mut workbook: Xlsx<_> = open_workbook(ruta_archivo)?;
+    // Verificar si el archivo existe
+    if !Path::new(ruta_archivo).exists() {
+        println!("Archivo '{}' no encontrado. Continuando sin información de agentes.", ruta_archivo);
+        return Ok(Vec::new());
+    }
+
+    let mut workbook: Xlsx<_> = match open_workbook(ruta_archivo) {
+        Ok(wb) => wb,
+        Err(e) => {
+            println!("Error al abrir el archivo '{}': {}. Continuando sin información de agentes.", ruta_archivo, e);
+            return Ok(Vec::new());
+        }
+    };
     
     let mut agentes = Vec::new();
     

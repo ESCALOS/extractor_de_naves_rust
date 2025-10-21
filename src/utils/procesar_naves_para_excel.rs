@@ -37,8 +37,12 @@ pub fn procesar_naves_para_excel(naves: &[Nave], agentes: &[Agente]) -> Result<V
             continue;
         }
 
-        // Buscar información del agente basado en el operador
-        let agente_info = buscar_agente_por_operador(agentes, &nave.operador_y_cargo);
+        // Buscar información del agente basado en el operador (solo si hay agentes disponibles)
+        let agente_info = if agentes.is_empty() {
+            None
+        } else {
+            buscar_agente_por_operador(agentes, &nave.operador_y_cargo)
+        };
 
         let nave_excel = NaveExcel {
             nave: nave.ship_name.clone(),
