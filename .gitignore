@@ -1,0 +1,7 @@
+/target
+*.xlsx
+*.pdf
+*.txt
+*.ico
+*.rc
+*.res
