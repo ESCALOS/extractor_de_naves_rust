@@ -1,6 +1,6 @@
 use crate::{model::{Nave, NaveExcel, Agente}, utils::{fechas::convertir_eta_etb_inteligente, leer_agentes::buscar_agente_por_operador}};
 
-pub fn procesar_naves_para_excel(naves: &[Nave], agentes: &[Agente]) -> Result<Vec<NaveExcel>, Box<dyn std::error::Error>> {
+pub fn procesar_naves_para_excel(naves: &[Nave], agentes: &[Agente], min_dias_bahia: i64) -> Result<Vec<NaveExcel>, Box<dyn std::error::Error>> {
     
     let mut naves_excel = Vec::new();
 
@@ -33,7 +33,7 @@ pub fn procesar_naves_para_excel(naves: &[Nave], agentes: &[Agente]) -> Result<V
         // Calcular diferencia entre ETB y ETA en días
         let dias_en_bahia = (etb_date - eta_date).num_days();
 
-        if dias_en_bahia < 5 {
+        if dias_en_bahia < min_dias_bahia {
             continue;
         }
 

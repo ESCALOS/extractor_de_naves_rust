@@ -32,7 +32,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let naves = parsear_naves(&texto)?;
 
     // Procesar las naves para Excel con filtros
-    let naves_excel = procesar_naves_para_excel(&naves, &agentes)?;
+    let naves_excel = procesar_naves_para_excel(&naves, &agentes, 5)?;
 
     // Exportar a Excel
     exportar_a_excel(&naves_excel)?;
